@@ -30,22 +30,22 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-
   List<Icon> scoreKeeper = [];
 
   void checkAnswer(bool userPickedAnswer) {
     bool correctAnswer = quizBrain.getCorrectAnswer();
 
     setState(() {
-      if(quizBrain.isFinished()){
-        Alert(context: context,  title: 'Finished!',
+      if (quizBrain.isFinished()) {
+        Alert(
+          context: context,
+          title: 'Finished!',
           desc: 'You\'ve reached the end of the quiz.',
         ).show();
 
         quizBrain.reset();
         scoreKeeper.clear();
-
-      }else {
+      } else {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(Icon(
             Icons.check,
@@ -60,9 +60,8 @@ class _QuizPageState extends State<QuizPage> {
         quizBrain.nextQuestion();
       }
     });
-    }
+  }
 
-  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -75,26 +74,23 @@ class _QuizPageState extends State<QuizPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    quizBrain.getQuestionText(),
+                    '${quizBrain.getQuestionNumber()} . ${quizBrain.getQuestionText()}',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
               )),
           Expanded(
-            child:  Padding(
+            child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: FlatButton(
                 child: Text(
                   'True',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
-                )
-                ,
-                onPressed: (){
-                  checkAnswer(true) ;
-                  
-                  
+                ),
+                onPressed: () {
+                  checkAnswer(true);
                 },
                 color: Colors.green,
               ),
@@ -110,15 +106,13 @@ class _QuizPageState extends State<QuizPage> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 color: Colors.red,
-                onPressed: (){
-                  checkAnswer(false) ;
+                onPressed: () {
+                  checkAnswer(false);
                 },
               ),
             ),
           ),
-          Row(
-            children: scoreKeeper
-          )
+          Row(children: scoreKeeper)
         ]);
   }
 }
